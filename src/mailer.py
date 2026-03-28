@@ -46,10 +46,18 @@ def send_newsletter(summary: str, articles: List[Dict[str, str]]):
     msg.set_content(text_content)
     msg.add_alternative(html_content, subtype='html')
 
+    smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
+    smtp_port = int(os.getenv("SMTP_PORT", "465"))
+
     try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        with smtplib.SMTP_SSL(smtp_host, smtp_port) as smtp:
             smtp.login(sender_email, sender_password)
             smtp.send_message(msg)
         print("Email sent successfully!")
+        return True
+    except smtplib.SMTPAuthenticationError as e:
+        raise RuntimeError(
+            "SMTP authentication failed. For Gmail, use a Google App Password (not your normal account password)."
+        ) from e
     except Exception as e:
-        print(f"Error sending email: {e}")
+        raise RuntimeError(f"Error sending email: {e}") from e
