@@ -19,9 +19,11 @@ def main():
     summary = generate_summary(articles)
 
     print("Sending email newsletter...")
-    send_newsletter(summary, articles)
-    
-    print("Process completed successfully.")
+    try:
+        send_newsletter(summary, articles)
+        print("Process completed successfully.")
+    except Exception as e:
+        print(f"Process failed while sending email: {e}")
 
 if __name__ == "__main__":
     main()
