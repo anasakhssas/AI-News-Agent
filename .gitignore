@@ -1,0 +1,18 @@
+# Environments
+.env
+.venv
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Mac OS folder attributes (if you use a Mac)
+.DS_Store
+
+# VS Code directory (if you use VS Code)
+.vscode/
